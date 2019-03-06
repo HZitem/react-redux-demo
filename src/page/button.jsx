@@ -1,30 +1,41 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import store from '../store.js';
-import { addToCart }  from '../actions/cart-actions';
+import { addToCart } from '../actions/cart-actions';
 
-class tests extends Component{
-    constructor(){
+class tests extends Component {
+    constructor() {
         super();
         this.state = {
-            name:"",
-            qty:"",
-            price:"",
+            name: "",
+            qty: "",
+            price: "",
         }
+        this.handleChange = this.handleChange.bind(this);
     }
-    add(){      
-        store.dispatch(addToCart('iwatch', 1, 250)); 
+    add() {
+        store.dispatch(addToCart(this.state.name, this.state.qty, this.state.price));
+        this.setState({
+            name: "",
+            qty:"",
+            price:""
+        });
     };
-    handle(event,type) {
-        this.setState({type:  event.target.value});
+    handleChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.setState({
+            [name]: value
+        });
     };
-    render(){
+    render() {
         return (
-           <div>
-               <input type="text" placeholder="name" value={this.state.name}  onChange={this.handle.bind(this,'name')} />
-               <input type="text" placeholder="qty" value={this.state.qty} onChange={this.handle.bind(this,'qty')}  />
-               <input type="text" placeholder="unitPrice" value={this.state.price} onChange={this.handle.bind(this,'price')}  />
+            <div>
+                <input type="text" placeholder="name" name="name" value={this.state.name} onChange={this.handleChange} />
+                <input type="text" placeholder="qty" name="qty" value={this.state.qty} onChange={this.handleChange} />
+                <input type="text" placeholder="unitPrice" name="price" value={this.state.price} onChange={this.handleChange} />
                 <button onClick={this.add.bind(this)}>add</button>
-           </div>
+            </div>
         )
     }
 }
