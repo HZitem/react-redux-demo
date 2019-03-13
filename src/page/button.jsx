@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import store from '../store.js';
 import { addToCart } from '../actions/cart-actions';
+import axios from 'axios';
 
 class tests extends Component {
     constructor() {
@@ -28,6 +29,12 @@ class tests extends Component {
             [name]: value
         });
     };
+    Bindaxios(){
+        axios.get('https://5b5e71c98e9f160014b88cc9.mockapi.io/api/v1/lists')
+        .then(function (response) {
+            console.log(response.data)
+        })
+    };
     render() {
         return (
             <div>
@@ -39,5 +46,6 @@ class tests extends Component {
         )
     }
 }
+
 
 export default tests;
